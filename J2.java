@@ -1,22 +1,70 @@
 package Lession.Java;
 
-import java.util.Arrays;
+import java.util.Scanner;
 
 public class J2 {
-    public static void main(String[] args) {
-        int[] array = { 9, 4, 7, 3, 5, 7, 3, 5 }; // исходный массив
-        // Сортировка пузырьком
-        int temp; // переменная для замены
-        for (int i = array.length - 1; i > 0; i--) { // внешний цикл
-            for (int j = 0; j < i; j++) { // внутренний цикл
-                if (array[j] > array[j + 1]) { // сравнение
-                    temp = array[j]; // если истино, то меняем
-                    array[j] = array[j + 1]; // местами элементы
-                    array[j + 1] = temp;
-                }
+
+    public static void Divine(int[] original) {
+        if (original.length <= 1)
+            return;
+        int middleIndex = original.length / 2;
+        int[] first = new int[middleIndex];
+        int[] second = new int[original.length - middleIndex];
+
+        for (int i = 0; i < middleIndex; i++)
+            first[i] = original[i];
+        for (int i = middleIndex; i < original.length; i++)
+            second[i - middleIndex] = original[i];
+
+        Divine(first);
+        Divine(second);
+        Merge(original, first, second);
+    }
+
+    public static void Merge(int[] original, int[] first, int[] second) {
+        int firstIndex = 0;
+        int secondIndex = 0;
+        int originalIndex = 0;
+        while (firstIndex < first.length && secondIndex < second.length) {
+            if (first[firstIndex] <= second[secondIndex]) {
+                original[originalIndex] = first[firstIndex];
+                firstIndex++;
+            } else {
+                original[originalIndex] = second[secondIndex];
+                secondIndex++;
             }
+            originalIndex++;
         }
-        // конец сортировки
-        System.out.println(Arrays.toString(array)); // выводим результат на консоль
+        while (firstIndex < first.length) {
+            original[originalIndex] = first[firstIndex];
+            firstIndex++;
+            originalIndex++;
+        }
+        while (secondIndex < second.length) {
+            original[originalIndex] = second[secondIndex];
+            secondIndex++;
+            originalIndex++;
+        }
+    }
+
+    public static void print(int[] array, String text) {
+        System.out.println(text);
+        for (int element : array)
+            System.out.print(element + " ");
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Введите элементы массива через пробел: ");
+        String rawInput = input.nextLine();
+        String[] array = rawInput.split(" ");
+        int[] original = new int[array.length];
+        for (int i = 0; i < original.length; i++)
+            original[i] = (Integer.parseInt(array[i]));
+        print(original, "Исходный массив:");
+        Divine(original);
+        print(original, "Отсортированный массив:");
+
     }
 }

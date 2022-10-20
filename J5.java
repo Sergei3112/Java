@@ -1,40 +1,22 @@
-
-package Lession.Java;
+// Пусть дан LinkedList с несколькими элементами. 
+// Реализуйте метод, который вернет “перевернутый” список.
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-import static java.util.Collections.max;
-import static java.util.Collections.min;
+class Main {
+    public static <T> List<T> reverseList(List<T> list) {
+        List<T> reverse = new ArrayList<>(list);
+        Collections.reverse(reverse);
+        return reverse;
+    }
 
-public class J5 {
     public static void main(String[] args) {
-        Random rnd = new Random();
-        ArrayList<Integer> list1 = new ArrayList<Integer>();
-        for (int i = 0; i < 10; i++) {
-            int val = rnd.nextInt(-10, 10);
-            list1.add(val);
-        }
-        System.out.printf("Первоначальный список -> %s\n", list1);
-        int max = max(list1);
-        int min = min(list1);
-        int maxItem = list1.get(0);
-        int minItem = list1.get(0);
-        int sumItems = 0;
-        for (int item : list1) {
-            if (item > maxItem) {
-                maxItem = item;
-            }
-            if (item < minItem) {
-                minItem = item;
-            }
-            sumItems += item;
-        }
-        float average = (float) sumItems / list1.size();
-        System.out.printf("Максимальный элемент -> %s\n", max);
+        List<Integer> list = Arrays.asList(2, 4, 6, 8, 10);
 
-        System.out.printf("Минимальный элемент -> %s\n", min);
-
-        System.out.printf("Среднее арифметическое -> %s\n", average);
+        List<Integer> reverse = reverseList(list);
+        System.out.println(reverse);
     }
 }
